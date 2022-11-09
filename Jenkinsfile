@@ -5,7 +5,7 @@ pipeline {
     }
     agent {
         docker {
-            image 'JKwidzinski/node-curl'
+            image 'jakubkwidzinski/node-curl'
             args '-p 3000:3000'
             args '-w /app'
             args '-v /var/run/docker.sock:/var/run/docker.sock'
@@ -28,7 +28,7 @@ pipeline {
         stage("Build & Push Docker image") {
             steps {
                 sh 'docker image build -t $registry:$BUILD_NUMBER .'
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u JKwidzinski --password-stdin'
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u jakubkwidzinski --password-stdin'
                 sh 'docker image push $registry:$BUILD_NUMBER'
                 sh "docker image rm $registry:$BUILD_NUMBER"
             }
